@@ -41,7 +41,7 @@ function Shop() {
   let filteredProducts = [...products];
   if (selectedCategory != null) {
     filteredProducts = products.filter(
-      (product) => product.category_id == selectedCategory
+      (product) => product.category_id === selectedCategory
     );
   }
   return (
@@ -56,6 +56,7 @@ function Shop() {
               <div className={classes.left}>
                 <img
                   src={selectedProduct.product_image}
+                  alt={selectedProduct.name}
                   className={classes.prodimg}
                 />
               </div>
@@ -89,10 +90,11 @@ function Shop() {
                 {filteredProducts.map((product) => (
                   <div className={classes.product} key={product.id}>
                     <h3>{product.name}</h3>
-                    <img
-                      src={product.product_image}
-                      className={classes.prodimg}
-                    />
+                      <img
+                        src={product.product_image}
+                        alt={product.name} // Provide meaningful text related to the image
+                        className={classes.prodimg}
+                      />
                     <h4>{product.price} $</h4>
                     <button onClick={() => onClickProductHandler(product)}>
                       Detail
