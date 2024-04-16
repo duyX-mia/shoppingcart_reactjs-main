@@ -8,7 +8,7 @@ function Giohang({ setShowCart, cart, setCart }) {
     const idx = cart.indexOf(sanpham);
     const arr = [...cart];
     arr[idx].amount += sl;
-    if (arr[idx].amount == 0) arr[idx].amount = 1;
+    if (arr[idx].amount === 0) arr[idx].amount = 1;
     setCart([...arr]);
   };
 
@@ -20,9 +20,11 @@ function Giohang({ setShowCart, cart, setCart }) {
     let tt = 0;
     cart.map((sp) => {
       tt += sp.price * sp.amount;
+      return null; // or any value you want to return
     });
     setTongtien(tt);
   };
+  
 
   //ham tinh tong tien tinh khi component dc render xong
   useEffect(() => {
@@ -38,7 +40,7 @@ function Giohang({ setShowCart, cart, setCart }) {
       {cart.map((product) => (
         <div className={classes.row}>
           <div className={classes.img}>
-            <img src={product.product_image} />
+          <img src={product.product_image} alt={product.name} />
           </div>
           <div className={classes.title}>{product.name}</div>
           <div className={classes.controls}>
