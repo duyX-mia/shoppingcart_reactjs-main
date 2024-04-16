@@ -1,4 +1,4 @@
-import './Adminlogic.js';
+// import './Adminlogic.js';
 import './Layout.css';
 import React from 'react';
 
