@@ -22,7 +22,7 @@ const EditCategory = () => {
 
   useEffect(() => {
     params?.id && fetchCategoryById();
-  }, [params?.id]);
+});
 
   const fetchCategoryById = async () => {
     try {

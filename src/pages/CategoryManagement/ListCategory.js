@@ -15,7 +15,7 @@ const ListCategory = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const onDeleteCategory = (id) => {
     const isConfirm = window.confirm("Bạn có chắc chắn muốn xoá danh mục này?");
