@@ -27,7 +27,8 @@ const EditAccount = () => {
 
   useEffect(() => {
     fetchAccountById();
-  }, [params?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [params?.id]);
 
   const fetchAccountById = async () => {
     try {

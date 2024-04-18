@@ -14,7 +14,7 @@ const ListAccount = () => {
 
   useEffect(() => {
     dispatch(fetchAccounts());
-  }, []);
+}, [dispatch]);
 
   const onDeleteAccount = (id) => {
     const isConfirm = window.confirm(
