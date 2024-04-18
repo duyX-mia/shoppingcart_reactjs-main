@@ -15,6 +15,7 @@ const ListCategory = () => {
 
   useEffect(() => {
     dispatch(getCategories());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDeleteCategory = (id) => {

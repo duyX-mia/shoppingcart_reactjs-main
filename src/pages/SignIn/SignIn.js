@@ -15,6 +15,7 @@ function SignIn() {
 
   useEffect(() => {
     isLogged && navigate("/admin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogged]);
 
   const {

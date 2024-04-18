@@ -22,8 +22,9 @@ const EditCategory = () => {
 
   useEffect(() => {
     params?.id && fetchCategoryById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.id]);
-
+  
   const fetchCategoryById = async () => {
     try {
       const data = await dispatch(getCategory(params?.id)).unwrap();

@@ -4,7 +4,7 @@ import styles from "./Account.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
-  addAccount,
+  // addAccount,
   editAccount,
   fetchAccount,
 } from "../../redux/reducer/AccountsSlide";
@@ -27,6 +27,7 @@ const EditAccount = () => {
 
   useEffect(() => {
     fetchAccountById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.id]);
 
   const fetchAccountById = async () => {

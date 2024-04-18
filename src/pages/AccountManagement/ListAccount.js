@@ -14,6 +14,7 @@ const ListAccount = () => {
 
   useEffect(() => {
     dispatch(fetchAccounts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDeleteAccount = (id) => {

@@ -27,10 +27,12 @@ const EditProduct = () => {
 
   useEffect(() => {
     dispatch(getCategories());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     params?.id && fetchProductById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.id]);
 
   const fetchProductById = async () => {
