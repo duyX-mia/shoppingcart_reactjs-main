@@ -1,23 +1,55 @@
 import { useEffect, useState } from "react";
-import { categories } from "../data/category";
-import { products } from "../data/product";
-import classes from "./Shop.module.css";
-import Modal from "./Modal";
-import Header from "./Header";
-import Giohang from "./Giohang";
-function Shop() {
-  const [selectedCategory, setCategory] = useState(null);
+import classes from "./Home.module.css";
+import Modal from "../../components/Modal";
+import Header from "../../components/Header";
+import Giohang from "../../components/Giohang";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCategories,
+  selectCategories,
+} from "../../redux/reducer/categorySlice";
+import {
+  getProductByCategoryId,
+  getProducts,
+  selectProduct,
+} from "../../redux/reducer/productSlice";
+import { formatCurrency } from "../../utils/common";
+
+function Home() {
+  const dispatch = useDispatch();
+  const { categories } = useSelector(selectCategories);
+  const { productsFilter } = useSelector(selectProduct);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const [isShowModal, setShowModal] = useState(false);
-  const [selectedProduct, setProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [isShowCart, setShowCart] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const onClickCategoryHandler = (cat_id) => {
-    setCategory(cat_id);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProductByCategoryId(selectedCategory));
+  }, [selectedCategory]);
+
+  const fetchData = async () => {
+    try {
+      await dispatch(getProducts()).unwrap();
+
+      await dispatch(getCategories()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickCategoryHandler = (categoryId) => {
+    setSelectedCategory(categoryId);
   };
 
   const onClickProductHandler = (product) => {
-    setProduct(product);
+    setSelectedProduct(product);
     setShowModal(true);
   };
 
@@ -25,25 +57,16 @@ function Shop() {
     setShowModal(false);
   };
 
-  const onAddtoCartHandler = (product) => {
+  const onAddToCartHandler = (product) => {
     if (cart.indexOf(product) !== -1) return null;
     const arr = [...cart];
-    product.amount = 1;
-    arr.push(product);
+    arr.push({
+      ...product,
+      amount: 1,
+    });
     setCart([...arr]);
   };
 
-  useEffect(() => {
-    console.log(cart);
-  });
-
-  //   console.log(selectedCategory);
-  let filteredProducts = [...products];
-  if (selectedCategory != null) {
-    filteredProducts = products.filter(
-      (product) => product.category_id === selectedCategory
-    );
-  }
   return (
     <div className={classes.container}>
       <Header soluong={cart.length} setShowCart={setShowCart} />
@@ -55,14 +78,14 @@ function Shop() {
             <div className={classes.row}>
               <div className={classes.left}>
                 <img
-                  src={selectedProduct.product_image}
+                  src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className={classes.prodimg}
+                  className={classes.productImage}
                 />
               </div>
               <div className={classes.right}>
                 <h3>{selectedProduct.name}</h3>
-                <h4>{selectedProduct.price}</h4>
+                <h4>{formatCurrency(+selectedProduct.price)}</h4>
                 <p>{selectedProduct.description}</p>
               </div>
             </div>
@@ -87,16 +110,19 @@ function Shop() {
             <>
               <h2>Products</h2>
               <div className={classes.boxes}>
-                {filteredProducts.map((product) => (
+                {productsFilter.map((product) => (
                   <div className={classes.product} key={product.id}>
                     <h3>{product.name}</h3>
-                      <img
-                        src={product.product_image}
-                        alt={product.name} // Provide meaningful text related to the image
-                        className={classes.prodimg}
-                      />
-                    <h4>{product.price} $</h4>
-                    <button onClick={() => onClickProductHandler(product)}>
+                    <img
+                      src={product.image}
+                      alt={product.name} // Provide meaningful text related to the image
+                      className={classes.productImage}
+                    />
+                    <h4>{formatCurrency(+product.price)}</h4>
+                    <button
+                      className={classes.button}
+                      onClick={() => onClickProductHandler(product)}
+                    >
                       Detail
                     </button>{" "}
                     &nbsp;
@@ -105,7 +131,10 @@ function Shop() {
                         Sản phẩm đã có trong giỏ
                       </span>
                     ) : (
-                      <button onClick={() => onAddtoCartHandler(product)}>
+                      <button
+                        className={classes.button}
+                        onClick={() => onAddToCartHandler(product)}
+                      >
                         Add to Cart
                       </button>
                     )}
@@ -124,4 +153,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default Home;

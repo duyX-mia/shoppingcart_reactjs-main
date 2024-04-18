@@ -1,18 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import type { RootState } from "../store";
 
-export interface Slide {
-  id: string;
-  image: string;
-}
-
-interface HomepageState {
-  slides: Slide[];
-  status: string;
-}
-
-const initialState: HomepageState = {
+const initialState = {
   slides: [],
   status: "IDLE",
 };
@@ -22,7 +11,7 @@ export const fetchCarouselImage = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("http://localhost:3000/carouselImages");
-      return response.data as Slide[];
+      return response.data;
     } catch (error) {
       console.error("Error when get carousel slide");
       throw error;
@@ -50,5 +39,4 @@ export const HomepageSlice = createSlice({
 });
 
 export default HomepageSlice;
-export const selectHomepageState = (state: RootState) => state.homepage;
-
+export const selectHomepageState = (state) => state.homepage;

@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import type { Product, ProductState } from "../../types/ProductType";
 import axios from "axios";
-import type { RootState } from "../store";
 
-const initialState: ProductState = {
+const initialState = {
   products: [],
   status: "IDLE",
 };
@@ -12,7 +10,7 @@ const initialState: ProductState = {
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {
   try {
     const response = await axios.get("http://localhost:3000/products");
-    return response.data as Product[];
+    return response.data;
   } catch (error) {
     console.error("Error when get data");
     throw error;
@@ -21,9 +19,9 @@ export const fetchProducts = createAsyncThunk("products/fetch", async () => {
 
 export const addProduct = createAsyncThunk(
   "products/add",
-  async (newProduct: Product) => {
+  async (newProduct) => {
     try {
-      const response = await axios.post<Product>(
+      const response = await axios.post(
         "http://localhost:3000/products",
         newProduct
       );
@@ -35,24 +33,21 @@ export const addProduct = createAsyncThunk(
   }
 );
 
-export const deleteProduct = createAsyncThunk(
-  "products/delete",
-  async (id: string) => {
-    try {
-      await axios.delete(`http://localhost:3000/products/${id}`);
-      return id;
-    } catch (error) {
-      console.error("Error when deleting product");
-      throw error;
-    }
+export const deleteProduct = createAsyncThunk("products/delete", async (id) => {
+  try {
+    await axios.delete(`http://localhost:3000/products/${id}`);
+    return id;
+  } catch (error) {
+    console.error("Error when deleting product");
+    throw error;
   }
-);
+});
 
 export const editProduct = createAsyncThunk(
   "products/edit",
-  async (selectedProduct: Product) => {
+  async (selectedProduct) => {
     try {
-      const response = await axios.put<Product>(
+      const response = await axios.put(
         `http://localhost:3000/products/${selectedProduct.id}`,
         selectedProduct
       );
@@ -87,4 +82,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice;
-export const selectProductState = (state: RootState) => state.products;
+export const selectProductState = (state) => state.products;

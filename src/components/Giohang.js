@@ -24,7 +24,6 @@ function Giohang({ setShowCart, cart, setCart }) {
     });
     setTongtien(tt);
   };
-  
 
   //ham tinh tong tien tinh khi component dc render xong
   useEffect(() => {
@@ -40,7 +39,7 @@ function Giohang({ setShowCart, cart, setCart }) {
       {cart.map((product) => (
         <div className={classes.row}>
           <div className={classes.img}>
-          <img src={product.product_image} alt={product.name} />
+            <img src={product.image} alt={product.name} />
           </div>
           <div className={classes.title}>{product.name}</div>
           <div className={classes.controls}>
