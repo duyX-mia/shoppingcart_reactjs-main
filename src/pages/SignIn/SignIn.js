@@ -14,8 +14,10 @@ function SignIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLogged && navigate("/admin");
-  }, [isLogged]);
+    if (isLogged) {
+        navigate("/admin");
+    }
+}, [isLogged, navigate]);
 
   const {
     register,

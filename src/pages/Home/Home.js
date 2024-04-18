@@ -28,11 +28,12 @@ function Home() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+});
 
   useEffect(() => {
     dispatch(getProductByCategoryId(selectedCategory));
-  }, [selectedCategory]);
+  }, [dispatch, selectedCategory]);
+
 
   const fetchData = async () => {
     try {

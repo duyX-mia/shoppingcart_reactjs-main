@@ -25,7 +25,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const onSubmit = async (data) => {
     try {

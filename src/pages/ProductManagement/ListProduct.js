@@ -16,7 +16,7 @@ const ListProducts = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
 
   const onDeleteProduct = (id) => {
     const isConfirm = window.confirm("Bạn có chắc chắn muốn xoá sản phẩm này?");

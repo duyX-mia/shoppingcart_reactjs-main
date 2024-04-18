@@ -27,11 +27,11 @@ const EditProduct = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch,]);
 
   useEffect(() => {
     params?.id && fetchProductById();
-  }, [params?.id]);
+});
 
   const fetchProductById = async () => {
     try {
